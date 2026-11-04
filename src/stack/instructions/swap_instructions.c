@@ -18,11 +18,13 @@ void swap(Stack *stack)
 void sa(Stack *a)
 {
   swap(a);
+  benchmark_update(a->benchmark, OP_SA);
 }
 
 void sb(Stack *b)
 {
   swap(b);
+  benchmark_update(b->benchmark, OP_SB);
 }
 
 void ss(Stack *a, Stack *b)

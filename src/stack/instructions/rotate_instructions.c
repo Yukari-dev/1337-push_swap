@@ -33,11 +33,13 @@ void  reverse_rotate(Stack *stack)
 void ra(Stack *a)
 {
   rotate(a);
+  benchmark_update(a->benchmark, OP_RA);
 }
 
 void rb(Stack *b)
 {
   rotate(b);
+  benchmark_update(b->benchmark, OP_RB);
 }
 
 void rr(Stack *a, Stack *b)
@@ -49,11 +51,13 @@ void rr(Stack *a, Stack *b)
 void rra(Stack *a)
 {
   reverse_rotate(a);
+  benchmark_update(a->benchmark, OP_RRA);
 }
 
 void rrb(Stack *b)
 {
   reverse_rotate(b);
+  benchmark_update(b->benchmark, OP_RRB);
 }
 
 void rrr(Stack *a, Stack *b)

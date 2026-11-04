@@ -16,6 +16,7 @@ void  initialize_stack(Stack *stack)
 {
   stack->start = NULL;
   stack->top = NULL;
+  stack->benchmark = NULL;
 }
 
 void clear_stack(Stack *stack)

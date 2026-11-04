@@ -8,6 +8,7 @@ void pa(Stack *a, Stack *b)
   {
     push(a, b->top->data, b->top->index);
     pop(b);
+    benchmark_update(a->benchmark, OP_PA);
   }
 }
 
@@ -19,5 +20,6 @@ void pb(Stack *b, Stack *a)
   {
     push(b, a->top->data, a->top->index);
     pop(a);
+    benchmark_update(b->benchmark, OP_PB);
   }
 }

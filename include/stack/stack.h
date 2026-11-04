@@ -1,5 +1,6 @@
 #ifndef STACK_H
 #define STACK_H
+#include "benchmark/benchmark.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -13,6 +14,7 @@ typedef struct s_Element{
 typedef struct s_Stack{
   Element *start;
   Element *top;
+  Benchmark *benchmark;
 } Stack;
 
 Element *create_element(int data, int index);

@@ -3,6 +3,7 @@
 #include "stack/instructions/push.h"
 #include "stack/instructions/rotate.h"
 #include "algorithms/algorithms.h"
+#include "benchmark/benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -30,7 +31,6 @@ typedef struct {
 static void	run_selection(Stack *a, Stack *b, int p) { (void)p; selection_sort(a, b); }
 static void	run_bubble(Stack *a, Stack *b, int p)    { (void)b; (void)p; bubble_sort(a); }
 static void	run_chunk(Stack *a, Stack *b, int p)     { chunk_sort(a, b, p); }
-
 
 void generate_stack(Stack *stack, int n)
 {
@@ -81,11 +81,7 @@ static void	print_result(const char *name, long long ns, double disorder)
 
 	format_elapsed(elapsed, sizeof(elapsed), ns);
 	fprintf(stderr, BOLD BLUE "%-14s" RESET, name);
-	fprintf(stderr, " time: %s%-12s" RESET, time_color(ns), elapsed);
-	if (disorder == 0.0)
-		fprintf(stderr, " " GREEN "sorted" RESET "\n");
-	else
-		fprintf(stderr, " " RED "NOT SORTED" RESET " (disorder %f)\n", disorder);
+	fprintf(stderr, " time: %s%-12s\n" RESET, time_color(ns), elapsed);
 }
 
 
@@ -94,6 +90,8 @@ int main(){
 	t_test	tests[] = {
 		{"selection", run_selection, 0},
 		{"bubble",    run_bubble,    0},
+		{"chunk c=5",   run_chunk,   5},
+		{"chunk c=10", run_chunk,   10},
 		{"chunk c=15", run_chunk,   15},
 		{"chunk c=30", run_chunk,   30},
 	};
@@ -106,10 +104,17 @@ int main(){
 
 	fprintf(stderr, BOLD CYAN "n = %d, same input for every test\n\n" RESET, n);
 	i = 0;
-	while (i < (int)(sizeof(tests) / sizeof(tests[0])))
+
+	size_t	tests_size = sizeof(tests) / sizeof(tests[0]);
+	Benchmark benchmark[tests_size];
+	while (i < tests_size)
 	{
+		benchmark_start(&benchmark[i], tests[i].name);
 		build_stack(&a, n);
 		initialize_stack(&b);
+		benchmark[i].initial_disorder = compute_disorder(&a);
+		a.benchmark = &benchmark[i];
+		b.benchmark = &benchmark[i];
 		rank_data(&a);
 		t0 = now_ns();
 		tests[i].fn(&a, &b, tests[i].param);
@@ -117,6 +122,14 @@ int main(){
 		print_result(tests[i].name, ns, compute_disorder(&a));
 		clear_stack(&a);
 		clear_stack(&b);
+		benchmark_end(&benchmark[i]);
+		i++;
+	}
+
+	i = 0;
+	while (i < tests_size)
+	{
+		benchmark_output(&benchmark[i]);
 		i++;
 	}
 
