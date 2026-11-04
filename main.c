@@ -8,14 +8,42 @@
 #include <time.h>
 
 #define MIN 0
-#define MAX 1000
+#define MAX 100000
+
+#define RESET   "\033[0m"
+#define BOLD    "\033[1m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+
+typedef void (*t_sort)(Stack *a, Stack *b, int param);
+
+typedef struct {
+	const	char	*name;
+	t_sort	fn;
+	int			param;
+} t_test;
+
+static void	run_selection(Stack *a, Stack *b, int p) { (void)p; selection_sort(a, b); }
+static void	run_bubble(Stack *a, Stack *b, int p)    { (void)b; (void)p; bubble_sort(a); }
+static void	run_chunk(Stack *a, Stack *b, int p)     { chunk_sort(a, b, p); }
+
 
 void generate_stack(Stack *stack, int n)
 {
-  srand(time(NULL));
+  srand(42);
   
   while (n-- > 0)
-    push(stack, (rand() % (MAX - MIN + 1)) + MIN);
+    push(stack, (rand() % (MAX - MIN + 1)) + MIN, -1);
+}
+
+static void	build_stack(Stack *s, int n)
+{
+	initialize_stack(s);
+	generate_stack(s, n);
 }
 
 static long long	now_ns(void)
@@ -26,39 +54,71 @@ static long long	now_ns(void)
 	return ((long long)ts.tv_sec * 1000000000LL + ts.tv_nsec);
 }
 
-static void	print_elapsed(const char *label, long long ns)
+static const char	*time_color(long long ns)
 {
-	if (ns < 1000)
-		fprintf(stderr, "%s: %lld ns\n", label, ns);
-	else if (ns < 1000000)
-		fprintf(stderr, "%s: %.3f us\n", label, ns / 1000.0);
-	else if (ns < 1000000000)
-		fprintf(stderr, "%s: %.3f ms\n", label, ns / 1000000.0);
-	else
-		fprintf(stderr, "%s: %.3f s\n", label, ns / 1000000000.0);
+	if (ns < 1000000LL)
+		return (GREEN);
+	if (ns < 100000000LL)
+		return (YELLOW);
+	return (RED);
 }
 
-#define TIMED(label, call) \
-	do { \
-		long long	t0_ = now_ns(); \
-		call; \
-		print_elapsed(label, now_ns() - t0_); \
-	} while (0)
+static void	format_elapsed(char *buf, size_t size, long long ns)
+{
+	if (ns < 1000)
+		snprintf(buf, size, "%lld ns", ns);
+	else if (ns < 1000000)
+		snprintf(buf, size, "%.3f us", ns / 1000.0);
+	else if (ns < 1000000000)
+		snprintf(buf, size, "%.3f ms", ns / 1000000.0);
+	else
+		snprintf(buf, size, "%.3f s", ns / 1000000000.0);
+}
+
+static void	print_result(const char *name, long long ns, double disorder)
+{
+	char	elapsed[32];
+
+	format_elapsed(elapsed, sizeof(elapsed), ns);
+	fprintf(stderr, BOLD BLUE "%-14s" RESET, name);
+	fprintf(stderr, " time: %s%-12s" RESET, time_color(ns), elapsed);
+	if (disorder == 0.0)
+		fprintf(stderr, " " GREEN "sorted" RESET "\n");
+	else
+		fprintf(stderr, " " RED "NOT SORTED" RESET " (disorder %f)\n", disorder);
+}
 
 
 int main(){
-  Stack a;
-  Stack b;
+	int		n = 10000;
+	t_test	tests[] = {
+		{"selection", run_selection, 0},
+		{"bubble",    run_bubble,    0},
+		{"chunk c=15", run_chunk,   15},
+		{"chunk c=30", run_chunk,   30},
+	};
+	Stack	a;
+	Stack	b;
+	int		i;
 
-  initialize_stack(&a);
-  initialize_stack(&b);
-  TIMED("Generate stack", generate_stack(&a, 10000));
-  // display_stack(&a);
-  
-  // TIMED("Selection sort", selection_sort(&a, &b));
-  TIMED("Bubble sort", bubble_sort(&a));
-  // display_stack(&a);
-  // display_stack(&b);
-  
+	long long	t0;
+	long long	ns;
+
+	fprintf(stderr, BOLD CYAN "n = %d, same input for every test\n\n" RESET, n);
+	i = 0;
+	while (i < (int)(sizeof(tests) / sizeof(tests[0])))
+	{
+		build_stack(&a, n);
+		initialize_stack(&b);
+		rank_data(&a);
+		t0 = now_ns();
+		tests[i].fn(&a, &b, tests[i].param);
+		ns = now_ns() - t0;
+		print_result(tests[i].name, ns, compute_disorder(&a));
+		clear_stack(&a);
+		clear_stack(&b);
+		i++;
+	}
+
   return 0;
 }

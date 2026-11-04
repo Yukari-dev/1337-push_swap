@@ -6,7 +6,7 @@ void pa(Stack *a, Stack *b)
     return ;
   if (b->top)
   {
-    push(a, b->top->data);
+    push(a, b->top->data, b->top->index);
     pop(b);
   }
 }
@@ -17,7 +17,7 @@ void pb(Stack *b, Stack *a)
     return ;
   if (a->top)
   {
-    push(b, a->top->data);
+    push(b, a->top->data, a->top->index);
     pop(a);
   }
 }
