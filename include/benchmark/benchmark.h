@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#define BENCH_BUFFER_CAP 512
+
 typedef enum {
   OP_SA, OP_SB, OP_SS,
   OP_PA, OP_PB,
@@ -12,10 +14,13 @@ typedef enum {
 } Operator;
 
 typedef struct {
-  const char    *name;
-  double        initial_disorder;
   unsigned long total_moves;
   unsigned long op_moves[OP_COUNT];
+  unsigned char log[BENCH_BUFFER_CAP];
+  int           log_head;
+  int           log_count;
+  double        initial_disorder;
+  const char    *name;
 } Benchmark;
 
 void  benchmark_start(Benchmark *benchmark, const char *name);

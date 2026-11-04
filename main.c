@@ -86,14 +86,14 @@ static void	print_result(const char *name, long long ns, double disorder)
 
 
 int main(){
-	int		n = 10000;
+	int		n = 10;
 	t_test	tests[] = {
 		{"selection", run_selection, 0},
-		{"bubble",    run_bubble,    0},
-		{"chunk c=5",   run_chunk,   5},
-		{"chunk c=10", run_chunk,   10},
-		{"chunk c=15", run_chunk,   15},
-		{"chunk c=30", run_chunk,   30},
+		// {"bubble",    run_bubble,    0},
+		// {"chunk c=5",   run_chunk,   5},
+		// {"chunk c=10", run_chunk,   10},
+		// {"chunk c=15", run_chunk,   15},
+		// {"chunk c=30", run_chunk,   30},
 	};
 	Stack	a;
 	Stack	b;
@@ -110,18 +110,28 @@ int main(){
 	while (i < tests_size)
 	{
 		benchmark_start(&benchmark[i], tests[i].name);
+
 		build_stack(&a, n);
 		initialize_stack(&b);
+
 		benchmark[i].initial_disorder = compute_disorder(&a);
+
 		a.benchmark = &benchmark[i];
 		b.benchmark = &benchmark[i];
+
 		rank_data(&a);
+
 		t0 = now_ns();
+
 		tests[i].fn(&a, &b, tests[i].param);
+
 		ns = now_ns() - t0;
+
 		print_result(tests[i].name, ns, compute_disorder(&a));
+
 		clear_stack(&a);
 		clear_stack(&b);
+
 		benchmark_end(&benchmark[i]);
 		i++;
 	}
