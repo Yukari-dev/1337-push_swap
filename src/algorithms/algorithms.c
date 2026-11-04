@@ -1,4 +1,5 @@
 #include "algorithms/algorithms.h"
+#include "stack/instructions/swap.h"
 #include "stack/instructions/push.h"
 #include "stack/instructions/rotate.h"
 
@@ -47,5 +48,36 @@ void  insertion_sort(Stack *a, Stack *b)
   while (!is_empty(a))
   {
     
+  }
+}
+
+void  bubble_sort(Stack *a)
+{
+  Element *curr;
+  int     stack_size;
+  int     i;
+  int     swapped;
+
+  if (is_empty(a))
+    return ;
+  stack_size = size(a);
+  while (1)
+  {
+    swapped = 0;
+    i = 0;
+    while (i < stack_size - 1)
+    {
+      if (a->top->data > a->top->prev->data)
+      {
+        sa(a);
+        swapped = 1;
+      }
+      ra(a);
+      i++;
+    }
+
+    ra(a);
+    if (!swapped)
+      break;
   }
 }

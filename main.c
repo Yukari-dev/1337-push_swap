@@ -55,7 +55,8 @@ int main(){
   TIMED("Generate stack", generate_stack(&a, 10000));
   // display_stack(&a);
   
-  TIMED("Selection sort", selection_sort(&a, &b));
+  // TIMED("Selection sort", selection_sort(&a, &b));
+  TIMED("Bubble sort", bubble_sort(&a));
   // display_stack(&a);
   // display_stack(&b);
   
