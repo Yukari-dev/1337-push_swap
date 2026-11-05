@@ -52,7 +52,7 @@ void  rank_data(Stack *stack)
     next = stack->top;
     while (next)
     {
-      if (curr->data < next->data)
+      if (next->data < curr->data)
         rank++;
       next = next->prev;
     }

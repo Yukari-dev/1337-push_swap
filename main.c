@@ -9,7 +9,7 @@
 #include <time.h>
 
 #define MIN 0
-#define MAX 100000
+#define MAX 100
 
 #define RESET   "\033[0m"
 #define BOLD    "\033[1m"
@@ -31,6 +31,7 @@ typedef struct {
 static void	run_selection(Stack *a, Stack *b, int p) { (void)p; selection_sort(a, b); }
 static void	run_bubble(Stack *a, Stack *b, int p)    { (void)b; (void)p; bubble_sort(a); }
 static void	run_chunk(Stack *a, Stack *b, int p)     { chunk_sort(a, b, p); }
+static void	run_radix(Stack *a, Stack *b, int p)     { (void)p; radix_sort(a, b); }
 
 void generate_stack(Stack *stack, int n)
 {
@@ -86,14 +87,15 @@ static void	print_result(const char *name, long long ns, double disorder)
 
 
 int main(){
-	int		n = 10;
+	int		n = 1000;
 	t_test	tests[] = {
-		{"selection", run_selection, 0},
-		// {"bubble",    run_bubble,    0},
-		// {"chunk c=5",   run_chunk,   5},
-		// {"chunk c=10", run_chunk,   10},
-		// {"chunk c=15", run_chunk,   15},
-		// {"chunk c=30", run_chunk,   30},
+		{"selection",  run_selection, 0},
+		{"bubble",     run_bubble,    0},
+		{"chunk c=5",  run_chunk,     5},
+		{"chunk c=10", run_chunk,    10},
+		{"chunk c=15", run_chunk,    15},
+		{"chunk c=30", run_chunk,    30},
+		{"radix",      run_radix,     0},
 	};
 	Stack	a;
 	Stack	b;
@@ -107,7 +109,7 @@ int main(){
 
 	size_t	tests_size = sizeof(tests) / sizeof(tests[0]);
 	Benchmark benchmark[tests_size];
-	while (i < tests_size)
+	while (i < (int)tests_size)
 	{
 		benchmark_start(&benchmark[i], tests[i].name);
 
@@ -128,7 +130,7 @@ int main(){
 		ns = now_ns() - t0;
 
 		print_result(tests[i].name, ns, compute_disorder(&a));
-
+		
 		clear_stack(&a);
 		clear_stack(&b);
 
@@ -137,7 +139,7 @@ int main(){
 	}
 
 	i = 0;
-	while (i < tests_size)
+	while (i < (int)tests_size)
 	{
 		benchmark_output(&benchmark[i]);
 		i++;
