@@ -1,8 +1,8 @@
 #include "stack/stack.h"
 
-Element *create_element(int data, int index)
+t_Element *create_element(int data, int index)
 {
-  Element *element = (Element *)malloc(sizeof(Element));
+  t_Element *element = (t_Element *)malloc(sizeof(t_Element));
   if (!element)
     return (NULL);
   element->data = data;
@@ -12,17 +12,17 @@ Element *create_element(int data, int index)
   return element;
 }
 
-void  initialize_stack(Stack *stack)
+void  initialize_stack(t_Stack *stack)
 {
   stack->start = NULL;
   stack->top = NULL;
   stack->benchmark = NULL;
 }
 
-void clear_stack(Stack *stack)
+void clear_stack(t_Stack *stack)
 {
-  Element *curr;
-  Element *saved;
+  t_Element *curr;
+  t_Element *saved;
 
   if (is_empty(stack))
     return ;
@@ -37,10 +37,10 @@ void clear_stack(Stack *stack)
   stack->top = NULL;
 }
 
-void  rank_data(Stack *stack)
+void  rank_data(t_Stack *stack)
 {
-  Element *curr;
-  Element *next;
+  t_Element *curr;
+  t_Element *next;
   int     rank;
 
   if (is_empty(stack))
@@ -61,9 +61,9 @@ void  rank_data(Stack *stack)
   }
 }
 
-void  push(Stack *stack, int data, int index)
+void  push(t_Stack *stack, int data, int index)
 {
-  Element *element = create_element(data, index);
+  t_Element *element = create_element(data, index);
   if (!element)
     return ;
   if (is_empty(stack))
@@ -79,9 +79,9 @@ void  push(Stack *stack, int data, int index)
   // printf("Pushed element: %d to the stack\n", data);
 }
 
-void  pop(Stack *stack)
+void  pop(t_Stack *stack)
 {
-  Element *element;
+  t_Element *element;
 
   element = stack->top;
   if (is_empty(stack))
@@ -100,9 +100,9 @@ void  pop(Stack *stack)
   free(element);
 }
 
-int size(Stack *stack)
+int size(t_Stack *stack)
 {
-  Element *curr;
+  t_Element *curr;
   int size;
   
   if (is_empty(stack))
@@ -117,9 +117,9 @@ int size(Stack *stack)
   return (size);
 }
 
-int find_min_position(Stack *stack)
+int find_min_position(t_Stack *stack)
 {
-  Element *curr;
+  t_Element *curr;
   int position;
   int smallest_position;
   int smallest;
@@ -143,9 +143,9 @@ int find_min_position(Stack *stack)
   return (smallest_position);
 }
 
-int   find_max_rank_position(Stack *stack)
+int   find_max_rank_position(t_Stack *stack)
 {
-  Element *curr;
+  t_Element *curr;
   int position;
   int largest_position;
   int largest;
@@ -169,14 +169,14 @@ int   find_max_rank_position(Stack *stack)
   return (largest_position);
 }
 
-char is_empty(Stack *stack)
+char is_empty(t_Stack *stack)
 {
   return (stack->start == NULL); 
 }
 
-void iterate(Stack *stack, void (*f)(Element*))
+void iterate(t_Stack *stack, void (*f)(t_Element*))
 {
-  Element *curr;
+  t_Element *curr;
 
   curr = stack->top;
   while (curr)
@@ -186,10 +186,10 @@ void iterate(Stack *stack, void (*f)(Element*))
   }
 }
 
-double compute_disorder(Stack *stack)
+double compute_disorder(t_Stack *stack)
 {
-  Element *curr;
-  Element *next;
+  t_Element *curr;
+  t_Element *next;
   long     total_pairs;
   long     mistakes;
 
@@ -213,16 +213,16 @@ double compute_disorder(Stack *stack)
   return ((double)mistakes / total_pairs);
 }
 
-static void full_display(Element *element){
-  printf("|-Element Data:  | %-4d|\n", element->data);
-  printf("|-Element Index: |  %-3d|\n", element->index);
+static void full_display(t_Element *element){
+  printf("|-t_Element Data:  | %-4d|\n", element->data);
+  printf("|-t_Element Index: |  %-3d|\n", element->index);
 }
 
-static void display(Element *element){
-  printf("|-Element Data:  | %-4d|\n", element->data);
+static void display(t_Element *element){
+  printf("|-t_Element Data:  | %-4d|\n", element->data);
 }
 
-void display_full_stack(Stack *stack)
+void display_full_stack(t_Stack *stack)
 {
   printf("\n-----------------\n");
   if (stack->top)
@@ -230,7 +230,7 @@ void display_full_stack(Stack *stack)
   iterate(stack, full_display);
 }
 
-void display_stack(Stack *stack)
+void display_stack(t_Stack *stack)
 {
   printf("\n-----------------\n");
   if (stack->top)

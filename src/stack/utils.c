@@ -1,8 +1,8 @@
 #include "stack/utils.h"
 
-int find_position(Stack *stack, int value)
+int find_position(t_Stack *stack, int value)
 {
-  Element *curr;
+  t_Element *curr;
   int     position;
 
   if (is_empty(stack))
@@ -19,9 +19,9 @@ int find_position(Stack *stack, int value)
   return (-1);
 }
 
-int find_position_under(Stack *stack, int value)
+int find_position_under(t_Stack *stack, int value)
 {
-  Element *curr;
+  t_Element *curr;
   int     position;
 
   if (is_empty(stack))

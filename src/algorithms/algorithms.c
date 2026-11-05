@@ -3,7 +3,7 @@
 #include "stack/instructions/push.h"
 #include "stack/instructions/rotate.h"
 
-static void rotate_till(Stack *stack, int times, void (*rotate)(Stack *stack))
+static void rotate_till(t_Stack *stack, int times, void (*rotate)(t_Stack *stack))
 {
   while (times > 0)
   {
@@ -12,9 +12,9 @@ static void rotate_till(Stack *stack, int times, void (*rotate)(Stack *stack))
   }
 }
 
-void  selection_sort(Stack *a, Stack *b)
+void  selection_sort(t_Stack *a, t_Stack *b)
 {
-  Element *curr;
+  t_Element *curr;
   int     smallest_p;
   int     a_size;
   
@@ -35,9 +35,9 @@ void  selection_sort(Stack *a, Stack *b)
     pa(a, b);
 }
 
-void  bubble_sort(Stack *a)
+void  bubble_sort(t_Stack *a)
 {
-  Element *curr;
+  t_Element *curr;
   int     stack_size;
   int     i;
   int     swapped;
@@ -66,7 +66,7 @@ void  bubble_sort(Stack *a)
   }
 }
 
-void  chunk_sort(Stack *a, Stack *b, int chunk_size)
+void  chunk_sort(t_Stack *a, t_Stack *b, int chunk_size)
 {
   int pushed_count;
   int top_rank;
@@ -105,7 +105,7 @@ void  chunk_sort(Stack *a, Stack *b, int chunk_size)
   }
 }
 
-void  radix_sort(Stack *a, Stack *b)
+void  radix_sort(t_Stack *a, t_Stack *b)
 {
   int bit;
   int max_bits;

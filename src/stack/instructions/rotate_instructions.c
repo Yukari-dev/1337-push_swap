@@ -1,8 +1,8 @@
 #include "stack/instructions/rotate.h"
 
-void rotate(Stack *stack)
+void rotate(t_Stack *stack)
 {
-  Element *first;
+  t_Element *first;
 
   if (is_empty(stack) || !stack->top || !stack->top->prev)
     return ;
@@ -15,9 +15,9 @@ void rotate(Stack *stack)
   stack->start = first;
 }
 
-void  reverse_rotate(Stack *stack)
+void  reverse_rotate(t_Stack *stack)
 {
-  Element *last;
+  t_Element *last;
 
   if (is_empty(stack) || !stack->start || !stack->start->next)
     return ;
@@ -30,38 +30,42 @@ void  reverse_rotate(Stack *stack)
   stack->top = last;
 }
 
-void ra(Stack *a)
+void ra(t_Stack *a)
 {
   rotate(a);
   benchmark_update(a->benchmark, OP_RA);
 }
 
-void rb(Stack *b)
+void rb(t_Stack *b)
 {
   rotate(b);
   benchmark_update(b->benchmark, OP_RB);
 }
 
-void rr(Stack *a, Stack *b)
+void rr(t_Stack *a, t_Stack *b)
 {
-  ra(a);
-  rb(b);
+  rotate(a);
+  rotate(b);
+  benchmark_update(a->benchmark, OP_RR);
+  benchmark_update(b->benchmark, OP_RR);
 }
 
-void rra(Stack *a)
+void rra(t_Stack *a)
 {
   reverse_rotate(a);
   benchmark_update(a->benchmark, OP_RRA);
 }
 
-void rrb(Stack *b)
+void rrb(t_Stack *b)
 {
   reverse_rotate(b);
   benchmark_update(b->benchmark, OP_RRB);
 }
 
-void rrr(Stack *a, Stack *b)
+void rrr(t_Stack *a, t_Stack *b)
 {
-  rra(a);
-  rrb(b);
+  reverse_rotate(a);
+  reverse_rotate(b);
+  benchmark_update(a->benchmark, OP_RRR);
+  benchmark_update(b->benchmark, OP_RRR);
 }

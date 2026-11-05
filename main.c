@@ -20,7 +20,7 @@
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
 
-typedef void (*t_sort)(Stack *a, Stack *b, int param);
+typedef void (*t_sort)(t_Stack *a, t_Stack *b, int param);
 
 typedef struct {
 	const	char	*name;
@@ -28,12 +28,12 @@ typedef struct {
 	int			param;
 } t_test;
 
-static void	run_selection(Stack *a, Stack *b, int p) { (void)p; selection_sort(a, b); }
-static void	run_bubble(Stack *a, Stack *b, int p)    { (void)b; (void)p; bubble_sort(a); }
-static void	run_chunk(Stack *a, Stack *b, int p)     { chunk_sort(a, b, p); }
-static void	run_radix(Stack *a, Stack *b, int p)     { (void)p; radix_sort(a, b); }
+static void	run_selection(t_Stack *a, t_Stack *b, int p) { (void)p; selection_sort(a, b); }
+static void	run_bubble(t_Stack *a, t_Stack *b, int p)    { (void)b; (void)p; bubble_sort(a); }
+static void	run_chunk(t_Stack *a, t_Stack *b, int p)     { chunk_sort(a, b, p); }
+static void	run_radix(t_Stack *a, t_Stack *b, int p)     { (void)p; radix_sort(a, b); }
 
-void generate_stack(Stack *stack, int n)
+void generate_stack(t_Stack *stack, int n)
 {
   srand(42);
   
@@ -41,7 +41,7 @@ void generate_stack(Stack *stack, int n)
     push(stack, (rand() % (MAX - MIN + 1)) + MIN, -1);
 }
 
-static void	build_stack(Stack *s, int n)
+static void	build_stack(t_Stack *s, int n)
 {
 	initialize_stack(s);
 	generate_stack(s, n);
@@ -87,24 +87,24 @@ static void	print_result(const char *name, long long ns, double disorder)
 
 
 int main(){
-	int		n = 1000;
+	int		n = 4;
 	t_test	tests[] = {
 		{"selection",  run_selection, 0},
-		{"bubble",     run_bubble,    0},
-		{"chunk c=5",  run_chunk,     5},
-		{"chunk c=10", run_chunk,    10},
-		{"chunk c=15", run_chunk,    15},
-		{"chunk c=30", run_chunk,    30},
-		{"radix",      run_radix,     0},
+		// {"bubble",     run_bubble,    0},
+		// {"chunk c=5",  run_chunk,     5},
+		// {"chunk c=10", run_chunk,    10},
+		// {"chunk c=15", run_chunk,    15},
+		// {"chunk c=30", run_chunk,    30},
+		// {"radix",      run_radix,     0},
 	};
-	Stack	a;
-	Stack	b;
+	t_Stack	a;
+	t_Stack	b;
 	int		i;
 
 	long long	t0;
 	long long	ns;
 
-	fprintf(stderr, BOLD CYAN "n = %d, same input for every test\n\n" RESET, n);
+	// fprintf(stderr, BOLD CYAN "n = %d, same input for every test\n\n" RESET, n);
 	i = 0;
 
 	size_t	tests_size = sizeof(tests) / sizeof(tests[0]);
@@ -121,6 +121,7 @@ int main(){
 		a.benchmark = &benchmark[i];
 		b.benchmark = &benchmark[i];
 
+		// display_stack(&a);
 		rank_data(&a);
 
 		t0 = now_ns();
@@ -129,12 +130,10 @@ int main(){
 
 		ns = now_ns() - t0;
 
-		print_result(tests[i].name, ns, compute_disorder(&a));
+		// print_result(tests[i].name, ns, compute_disorder(&a));
 		
 		clear_stack(&a);
 		clear_stack(&b);
-
-		benchmark_end(&benchmark[i]);
 		i++;
 	}
 
@@ -144,6 +143,7 @@ int main(){
 		benchmark_output(&benchmark[i]);
 		i++;
 	}
-
+	// 39 37 71 21
+	// rra pb ra pb ra pb pb pa pa pa pa
   return 0;
 }

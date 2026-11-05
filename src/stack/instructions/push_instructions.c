@@ -1,6 +1,6 @@
 #include "stack/instructions/push.h"
 
-void pa(Stack *a, Stack *b)
+void pa(t_Stack *a, t_Stack *b)
 {
   if (is_empty(b))
     return ;
@@ -12,7 +12,7 @@ void pa(Stack *a, Stack *b)
   }
 }
 
-void pb(Stack *b, Stack *a)
+void pb(t_Stack *b, t_Stack *a)
 {
   if (is_empty(a))
     return ;

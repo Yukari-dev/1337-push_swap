@@ -1,9 +1,9 @@
 #include "stack/instructions/swap.h"
 
-void swap(Stack *stack)
+void swap(t_Stack *stack)
 {
-  Element *top;
-  Element *prev;
+  t_Element *top;
+  t_Element *prev;
   int     data;
 
   if (is_empty(stack))
@@ -15,19 +15,19 @@ void swap(Stack *stack)
   prev->data = data;
 }
 
-void sa(Stack *a)
+void sa(t_Stack *a)
 {
   swap(a);
   benchmark_update(a->benchmark, OP_SA);
 }
 
-void sb(Stack *b)
+void sb(t_Stack *b)
 {
   swap(b);
   benchmark_update(b->benchmark, OP_SB);
 }
 
-void ss(Stack *a, Stack *b)
+void ss(t_Stack *a, t_Stack *b)
 {
   swap(a);
   swap(b);
