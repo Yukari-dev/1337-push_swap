@@ -42,6 +42,11 @@ static t_strategy	resolve_strategy(t_strategy requested, double disorder)
 
 static void	dispatch(t_Stack *a, t_Stack *b, t_strategy resolved, int size)
 {
+	if (size < 6)
+	{
+		bubble_sort(a);
+		return ;
+	}
 	if (resolved == STRAT_SIMPLE)
 		selection_sort(a, b);
 	else if (resolved == STRAT_MEDIUM)
@@ -61,13 +66,12 @@ static void	sort(t_Stack *a, t_Stack *b, t_args *args, t_benchmark *bench)
 	resolved = resolve_strategy(args->strategy, disorder);
 	a->benchmark = bench;
 	b->benchmark = bench;
-	benchmark_start(bench, "push_swap");
+	benchmark_start(bench);
 	benchmark_set_disorder(bench, disorder);
 	benchmark_set_strategy(bench,
 		strategy_name(resolved, args->strategy == STRAT_ADAPTIVE));
-	dispatch(a, b, resolved, args->size);
-	if (!args->bench)
-		benchmark_end(bench);
+	if (!is_sorted(a))
+		dispatch(a, b, resolved, args->size);
 }
 
 int	main(int argc, char *argv[])

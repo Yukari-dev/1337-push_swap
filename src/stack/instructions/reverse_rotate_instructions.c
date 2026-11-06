@@ -30,12 +30,14 @@ void	reverse_rotate(t_Stack *stack)
 void	rra(t_Stack *a)
 {
 	reverse_rotate(a);
+	ft_putstr_fd("rra\n", 1);
 	benchmark_update(a->benchmark, OP_RRA);
 }
 
 void	rrb(t_Stack *b)
 {
 	reverse_rotate(b);
+	ft_putstr_fd("rrb\n", 1);
 	benchmark_update(b->benchmark, OP_RRB);
 }
 
@@ -43,6 +45,7 @@ void	rrr(t_Stack *a, t_Stack *b)
 {
 	reverse_rotate(a);
 	reverse_rotate(b);
+	ft_putstr_fd("rrr\n", 1);
 	benchmark_update(a->benchmark, OP_RRR);
 	benchmark_update(b->benchmark, OP_RRR);
 }

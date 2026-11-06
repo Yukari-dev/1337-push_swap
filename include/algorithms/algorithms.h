@@ -16,6 +16,7 @@
 # include "stack/stack.h"
 
 void	rotate_till(t_Stack *stack, int times, void (*rotate)(t_Stack *stack));
+void	bubble_sort(t_Stack *a);
 void	selection_sort(t_Stack *a, t_Stack *b);
 void	chunk_sort(t_Stack *a, t_Stack *b, int chunk_size);
 void	radix_sort(t_Stack *a, t_Stack *b);

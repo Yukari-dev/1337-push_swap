@@ -34,18 +34,6 @@ char	is_empty(t_Stack *stack)
 	return (stack->start == NULL);
 }
 
-void	iterate(t_Stack *stack, void (*f)(t_Element*))
-{
-	t_Element	*curr;
-
-	curr = stack->top;
-	while (curr)
-	{
-		f(curr);
-		curr = curr->prev;
-	}
-}
-
 void	rank_data(t_Stack *stack)
 {
 	t_Element	*curr;
@@ -95,4 +83,20 @@ double	compute_disorder(t_Stack *stack)
 	if (total_pairs == 0)
 		return (0.0);
 	return ((double)mistakes / total_pairs);
+}
+
+int	is_sorted(t_Stack *stack)
+{
+	t_Element	*curr;
+
+	if (is_empty(stack) || size(stack) == 1)
+		return (1);
+	curr = stack->top;
+	while (curr && curr->prev)
+	{
+		if (curr->data > curr->prev->data)
+			return (0);
+		curr = curr->prev;
+	}
+	return (1);
 }

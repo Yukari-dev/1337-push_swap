@@ -12,17 +12,6 @@
 
 #include "benchmark/benchmark.h"
 
-static const char	*get_string_from_op(t_operator op)
-{
-	static const char	*names[OP_COUNT] = {
-		"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr", "rra", "rrb", "rrr"
-	};
-
-	if (op < 0 || op >= OP_COUNT)
-		return (NULL);
-	return (names[op]);
-}
-
 static void	put_float_fd(double disorder)
 {
 	int	percent;
@@ -38,32 +27,14 @@ static void	put_float_fd(double disorder)
 	ft_putstr_fd("%\n", 2);
 }
 
-void	print_log_tail(t_benchmark *benchmark)
-{
-	long	i;
-	long	idx;
-
-	if (benchmark->log_count == 0)
-		return ;
-	i = 0;
-	while (i < benchmark->log_count)
-	{
-		idx = benchmark->log_head - benchmark->log_count + i;
-		idx = (idx + BENCH_BUFFER_CAP) % BENCH_BUFFER_CAP;
-		ft_putstr_fd((char *)get_string_from_op(benchmark->log[idx]), 1);
-		ft_putstr_fd("\n", 1);
-		i++;
-	}
-}
-
 void	benchmark_output(t_benchmark *benchmark)
 {
-	ft_putstr_fd("[bench]: disorder: ", 1);
+	ft_putstr_fd("[bench]: disorder: ", 2);
 	put_float_fd(benchmark->initial_disorder);
-	ft_putstr_fd("[bench]: strategy: ", 1);
-	ft_putstr_fd(benchmark->strategy_name, 1);
-	ft_putstr_fd("\n[bench]: total_ops: ", 1);
-	ft_putnbr_fd((int)benchmark->total_moves, 1);
-	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("[bench]: strategy: ", 2);
+	ft_putstr_fd(benchmark->strategy_name, 2);
+	ft_putstr_fd("\n[bench]: total_ops: ", 2);
+	ft_putnbr_fd((int)benchmark->total_moves, 2);
+	ft_putstr_fd("\n", 2);
 	print_ops(benchmark);
 }

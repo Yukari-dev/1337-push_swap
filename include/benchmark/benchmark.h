@@ -15,8 +15,6 @@
 
 # include <unistd.h>
 
-# define BENCH_BUFFER_CAP 512
-
 typedef enum e_operator
 {
 	OP_SA,
@@ -37,21 +35,15 @@ typedef struct s_benchmark
 {
 	unsigned long	total_moves;
 	unsigned long	op_moves[OP_COUNT];
-	unsigned char	log[BENCH_BUFFER_CAP];
-	int				log_head;
-	int				log_count;
 	double			initial_disorder;
 	const char		*strategy_name;
-	const char		*name;
 }	t_benchmark;
 
-void	benchmark_start(t_benchmark *benchmark, const char *name);
+void	benchmark_start(t_benchmark *benchmark);
 void	benchmark_update(t_benchmark *benchmark, t_operator operator);
 void	benchmark_set_disorder(t_benchmark *benchmark, double disorder);
 void	benchmark_set_strategy(t_benchmark *benchmark, const char *strat);
 void	benchmark_output(t_benchmark *benchmark);
-void	benchmark_end(t_benchmark *benchmark);
-void	print_log_tail(t_benchmark *benchmark);
 void	print_ops(t_benchmark *benchmark);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(const char *s, int fd);

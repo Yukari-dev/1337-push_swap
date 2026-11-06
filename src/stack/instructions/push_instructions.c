@@ -20,6 +20,7 @@ void	pa(t_Stack *a, t_Stack *b)
 	{
 		push(a, b->top->data, b->top->index);
 		pop(b);
+		ft_putstr_fd("pa\n", 1);
 		benchmark_update(a->benchmark, OP_PA);
 	}
 }
@@ -32,6 +33,7 @@ void	pb(t_Stack *b, t_Stack *a)
 	{
 		push(b, a->top->data, a->top->index);
 		pop(a);
+		ft_putstr_fd("pb\n", 1);
 		benchmark_update(b->benchmark, OP_PB);
 	}
 }

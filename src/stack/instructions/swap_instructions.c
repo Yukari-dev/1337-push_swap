@@ -30,12 +30,14 @@ void	swap(t_Stack *stack)
 void	sa(t_Stack *a)
 {
 	swap(a);
+	ft_putstr_fd("sa\n", 1);
 	benchmark_update(a->benchmark, OP_SA);
 }
 
 void	sb(t_Stack *b)
 {
 	swap(b);
+	ft_putstr_fd("sb\n", 1);
 	benchmark_update(b->benchmark, OP_SB);
 }
 
@@ -43,4 +45,5 @@ void	ss(t_Stack *a, t_Stack *b)
 {
 	swap(a);
 	swap(b);
+	ft_putstr_fd("ss\n", 1);
 }

@@ -35,7 +35,11 @@ int		parse_args(t_checker *c, int argc, char **argv);
 void	free_checker(t_checker *c);
 int		ft_strcmp(const char *a, const char *b);
 void	memmove_int(int *dst, int *src, int n);
-int		is_sorted(t_checkerStack *s);
+int		is_stack_sorted(t_checkerStack *s);
+void	swap_top(int *d, int size);
+void	push_top(int *dst, int *ds, int *src, int *ss);
+void	rotate_up(int *d, int size);
+void	rotate_down(int *d, int size);
 int		apply_op(t_checker *c, char *line);
 
 #endif

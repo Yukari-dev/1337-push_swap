@@ -41,9 +41,7 @@ void		pop(t_Stack *stack);
 int			size(t_Stack *stack);
 int			find_min_position(t_Stack *stack);
 int			find_max_rank_position(t_Stack *stack);
-void		iterate(t_Stack *stack, void (*f)(t_Element *));
-void		display_full_stack(t_Stack *stack);
-void		display_stack(t_Stack *stack);
+int			is_sorted(t_Stack *stack);
 double		compute_disorder(t_Stack *stack);
 
 #endif

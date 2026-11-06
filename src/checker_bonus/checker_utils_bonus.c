@@ -48,7 +48,7 @@ void	memmove_int(int *dst, int *src, int n)
 	}
 }
 
-int	is_sorted(t_checkerStack *s)
+int	is_stack_sorted(t_checkerStack *s)
 {
 	int	i;
 

@@ -30,12 +30,14 @@ void	rotate(t_Stack *stack)
 void	ra(t_Stack *a)
 {
 	rotate(a);
+	ft_putstr_fd("ra\n", 1);
 	benchmark_update(a->benchmark, OP_RA);
 }
 
 void	rb(t_Stack *b)
 {
 	rotate(b);
+	ft_putstr_fd("rb\n", 1);
 	benchmark_update(b->benchmark, OP_RB);
 }
 
@@ -43,6 +45,7 @@ void	rr(t_Stack *a, t_Stack *b)
 {
 	rotate(a);
 	rotate(b);
+	ft_putstr_fd("rr`n", 1);
 	benchmark_update(a->benchmark, OP_RR);
 	benchmark_update(b->benchmark, OP_RR);
 }
