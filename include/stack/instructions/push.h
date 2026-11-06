@@ -1,8 +1,21 @@
-#ifndef PUSH_H 
-#define PUSH_H
-#include "stack/stack.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maoulad <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/06 12:27:59 by maoulad           #+#    #+#             */
+/*   Updated: 2026/11/06 12:28:01 by maoulad          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void pa(t_Stack *a, t_Stack *b);
-void pb(t_Stack *b, t_Stack *a);
+#ifndef PUSH_H
+# define PUSH_H
+
+# include "stack/stack.h"
+
+void	pa(t_Stack *a, t_Stack *b);
+void	pb(t_Stack *b, t_Stack *a);
 
 #endif
