@@ -48,6 +48,27 @@ void	memmove_int(int *dst, int *src, int n)
 	}
 }
 
+int	checker_count_bytes(int argc, char **argv)
+{
+	int	total;
+	int	i;
+	int	j;
+
+	total = 0;
+	i = 0;
+	while (i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			total++;
+			j++;
+		}
+		i++;
+	}
+	return (total);
+}
+
 int	is_stack_sorted(t_checkerStack *s)
 {
 	int	i;

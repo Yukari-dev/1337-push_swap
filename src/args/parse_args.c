@@ -12,8 +12,11 @@
 
 #include "args/parse_args.h"
 
-static int	init_args(t_args *args, int max)
+static int	init_args(t_args *args, int argc, char **argv)
 {
+	int	max;
+
+	max = count_args_bytes(argc, argv);
 	args->data = NULL;
 	args->cap = 0;
 	args->size = 0;
@@ -34,9 +37,8 @@ static int	take_token(t_args *args, char *tok, int *seen)
 		return (handle_flag(args, tok, seen));
 	if (args->size >= args->cap)
 		return (0);
-	if (parse_one(tok, &args->data[args->size]) < 0)
+	if (!parse_whitespace(args, tok))
 		return (0);
-	args->size++;
 	return (1);
 }
 
@@ -62,7 +64,7 @@ int	parse_args(t_args *args, int argc, char **argv)
 	int	i;
 	int	seen;
 
-	if (!init_args(args, argc - 1))
+	if (!init_args(args, argc, argv))
 		return (-1);
 	seen = 0;
 	i = 0;

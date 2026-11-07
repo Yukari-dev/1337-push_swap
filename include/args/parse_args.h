@@ -37,6 +37,8 @@ typedef struct s_args
 
 int			parse_args(t_args *args, int argc, char **argv);
 int			parse_one(char *s, int *out);
+int			parse_whitespace(t_args *args, char *tok);
+int			count_args_bytes(int argc, char **argv);
 int			has_dups(int *arr, int n);
 int			handle_flag(t_args *args, char *tok, int *seen);
 void		free_args(t_args *args);

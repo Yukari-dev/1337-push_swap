@@ -44,7 +44,7 @@ static int	parse_digits(char *s, int i, int neg, long long *v)
 	return (0);
 }
 
-static int	parse_one(char *s, int *out)
+int	parse_one(char *s, int *out)
 {
 	int			i;
 	int			neg;
@@ -83,27 +83,26 @@ static int	has_dups(int *data, int size)
 	return (0);
 }
 
-int	parse_args(t_checker *checker, int ac, char *av[])
+int	parse_args(t_checker *c, int argc, char **argv)
 {
-	int	total_count;
+	int	max;
 	int	i;
 
-	total_count = ac - 1;
-	checker->a.data = malloc(sizeof(int) * total_count);
-	checker->b.data = malloc(sizeof(int) * total_count);
-	if (!checker->a.data || !checker->b.data)
+	max = checker_count_bytes(argc, argv);
+	c->a.data = malloc((size_t)max * sizeof(int));
+	c->b.data = malloc((size_t)max * sizeof(int));
+	if (!c->a.data || !c->b.data)
 		return (-1);
-	checker->a.size = 0;
-	checker->b.size = 0;
-	i = 0;
-	while (i < total_count)
+	c->a.size = 0;
+	c->b.size = 0;
+	i = 1;
+	while (i < argc)
 	{
-		if (parse_one(av[i + 1], &checker->a.data[i]) < 0)
+		if (!checker_parse_whitespace(c->a.data, &c->a.size, max, argv[i]))
 			return (-1);
 		i++;
 	}
-	if (has_dups(checker->a.data, total_count))
+	if (has_dups(c->a.data, c->a.size))
 		return (-1);
-	checker->a.size = total_count;
 	return (0);
 }

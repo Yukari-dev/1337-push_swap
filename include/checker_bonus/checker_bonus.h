@@ -32,6 +32,7 @@ typedef struct s_checker
 
 void	put_msg(int fd, const char *msg, int len);
 int		parse_args(t_checker *c, int argc, char **argv);
+int		checker_parse_whitespace(int *data, int *size, int cap, char *tok);
 void	free_checker(t_checker *c);
 int		ft_strcmp(const char *a, const char *b);
 void	memmove_int(int *dst, int *src, int n);
@@ -41,5 +42,7 @@ void	push_top(int *dst, int *ds, int *src, int *ss);
 void	rotate_up(int *d, int size);
 void	rotate_down(int *d, int size);
 int		apply_op(t_checker *c, char *line);
+int		checker_count_bytes(int argc, char **argv);
+int		parse_one(char *s, int *out);
 
 #endif
