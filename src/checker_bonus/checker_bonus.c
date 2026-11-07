@@ -91,13 +91,11 @@ int	main(int ac, char *av[])
 	while (r > 0)
 	{
 		r = read_line(line, sizeof(line));
-		if (r <= 0)
-			break ;
-		if (!apply_op(&checker, line))
+		if (r < 0)
+			return (die(&checker));
+		if (r > 0 && !apply_op(&checker, line))
 			return (die(&checker));
 	}
-	if (r < 0)
-		return (die(&checker));
 	if (is_stack_sorted(&checker.a) && checker.b.size == 0)
 		put_msg(1, "OK\n", 3);
 	else

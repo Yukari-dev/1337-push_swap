@@ -53,7 +53,6 @@ static void	dispatch(t_Stack *a, t_Stack *b, t_strategy resolved, int size)
 		chunk_sort(a, b, size);
 	else
 		radix_sort(a, b);
-		// cheapest_sort(a, b);
 }
 
 static void	sort(t_Stack *a, t_Stack *b, t_args *args, t_benchmark *bench)
