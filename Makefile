@@ -3,7 +3,7 @@ BONUS = checker
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 
-ALGORITHM_SRCS = src/algorithms/simple_sort.c src/algorithms/chunk_sort.c src/algorithms/radix_sort.c 
+ALGORITHM_SRCS = src/algorithms/simple_sort.c src/algorithms/chunk_sort.c src/algorithms/radix_sort.c
 BENCHMARK_SRCS = src/benchmark/benchmark.c src/benchmark/benchmark_output.c src/benchmark/benchmark_print.c
 STACK_SRCS = src/stack/stack_core.c src/stack/stack_find.c src/stack/stack_utils.c src/stack/utils.c
 INSTRUCTION_SRCS = src/stack/instructions/push_instructions.c src/stack/instructions/rotate_instructions.c src/stack/instructions/reverse_rotate_instructions.c \
