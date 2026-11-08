@@ -21,28 +21,17 @@ INCLUDES = include/algorithms/algorithms.h include/args/parse_args.h include/ben
 
 BONUS_INCLUDES = include/checker_bonus/checker_bonus.h
 
-OBJS = $(SRCS:.c=.o)
-BONUS_OBJS = $(BONUS_SRCS:.c=.o)
-
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+$(NAME): $(SRCS) $(INCLUDES)
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 
 bonus: $(BONUS)
 
-$(BONUS): $(BONUS_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJS): $(INCLUDES)
-
-$(BONUS_OBJS): $(BONUS_INCLUDES)
+$(BONUS): $(BONUS_SRCS) $(BONUS_INCLUDES)
+	$(CC) $(CFLAGS) $(BONUS_SRCS) -o $(BONUS)
 
 clean:
-	rm -rf $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
 	rm -rf $(NAME) $(BONUS)

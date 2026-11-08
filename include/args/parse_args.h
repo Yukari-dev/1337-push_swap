@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <string.h>
 # include <limits.h>
 
 typedef enum s_Strategy

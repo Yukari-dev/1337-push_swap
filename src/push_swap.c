@@ -100,5 +100,6 @@ int	main(int argc, char *argv[])
 	if (args.bench)
 		benchmark_output(&bench);
 	free_args(&args);
+	clear_stack(&a);
 	return (0);
 }
