@@ -90,10 +90,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	if (args.size == 0)
-	{
-		free_args(&args);
-		return (0);
-	}
+		return (free_args(&args), 0);
 	initialize_stack(&a);
 	generate_stack(&a, args.data, args.size);
 	sort(&a, &b, &args, &bench);
